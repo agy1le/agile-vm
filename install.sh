@@ -25,6 +25,7 @@ docker run -d \
     -e SUBFOLDER=/ \
     -e TITLE=AgileVM \
     -e PASSWORD=agilevm \
+    -e RESOLUTION=1280x720 \
     -p 3000:3000 \
     --shm-size=1gb \
     --restart unless-stopped \
