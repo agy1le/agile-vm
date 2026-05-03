@@ -33,5 +33,5 @@ docker run -d \
 clear
 echo "================================================================"
 echo "  AgileVM installed! Open the Ports tab and click port 3000."
-echo "  Password: agilevm"
+echo "  Username: abc | Password: agilevm"
 echo "================================================================"
