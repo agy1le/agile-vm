@@ -1,0 +1,38 @@
+#!/bin/bash
+set -e
+
+echo "**** Building AgileVM Mobile ****"
+
+# Fix docker-proxy missing issue on Codespaces
+sudo mkdir -p /usr/libexec/docker
+sudo ln -sf $(which docker-proxy) /usr/libexec/docker/docker-proxy 2>/dev/null || true
+
+docker stop AgileVM 2>/dev/null || true
+docker rm AgileVM 2>/dev/null || true
+rm -rf AgileVM
+
+git clone https://github.com/agy1le/school-vm AgileVM
+cd AgileVM
+
+docker build -t agilevm-mobile -f Dockerfile.mobile . --no-cache
+
+docker run -d \
+    --name=AgileVM \
+    -e PUID=1000 \
+    -e PGID=1000 \
+    --security-opt seccomp=unconfined \
+    -e TZ=Etc/UTC \
+    -e SUBFOLDER=/ \
+    -e TITLE=AgileVM \
+    -e PASSWORD=agilevm \
+    -e RESOLUTION=390x844 \
+    -p 3000:3000 \
+    --shm-size=1gb \
+    --restart unless-stopped \
+    agilevm-mobile
+
+clear
+echo "================================================================"
+echo "  AgileVM Mobile installed! Open the Ports tab and click port 3000."
+echo "  Username: abc | Password: agilevm"
+echo "================================================================"

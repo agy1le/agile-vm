@@ -8,15 +8,24 @@ AgileVM is a one-command installer that spins up a containerized Firefox desktop
 
 ## Commands
 
-**Build and run the VM (from a Codespace terminal):**
+**Desktop (run from a Codespace terminal):**
 ```bash
 bash install.sh
 ```
-This stops/removes any existing `AgileVM` container, rebuilds the image from scratch (`--no-cache`), and starts it.
+
+**Mobile (portrait 390x844, Firefox kiosk mode):**
+```bash
+bash install-mobile.sh
+```
+
+Both scripts stop/remove the existing `AgileVM` container before starting, so running either one swaps the mode automatically.
 
 **Rebuild just the Docker image:**
 ```bash
+# Desktop
 docker build -t agilevm . --no-cache
+# Mobile
+docker build -t agilevm-mobile -f Dockerfile.mobile . --no-cache
 ```
 
 **Check running container:**
@@ -32,11 +41,10 @@ docker stop AgileVM && docker rm AgileVM
 
 ## Architecture
 
-Three files do everything:
-
-- **`Dockerfile`** — installs Firefox on top of the webtop base image and copies `firefox.js` into `/etc/firefox/syspref.js` (Firefox's system-wide preferences path).
-- **`firefox.js`** — locks Firefox settings for the containerized environment: homepage, hardware acceleration, animation/telemetry disabling to reduce VNC lag.
-- **`install.sh`** — the full lifecycle script: clones this repo fresh, builds the image, and runs the container with the correct env vars (`RESOLUTION`, `PASSWORD`, `SUBFOLDER`, etc.) expected by the linuxserver/webtop image.
+- **`Dockerfile`** / **`Dockerfile.mobile`** — install Firefox on top of the webtop base image and copy `firefox.js` into `/etc/firefox/syspref.js`. The mobile variant also copies `kiosk-init.sh` into `/custom-cont-init.d/`, which the linuxserver init system runs at container startup.
+- **`firefox.js`** — shared system-wide Firefox prefs for both variants: homepage, hardware acceleration, AV1 disabled, animations disabled to reduce VNC redraws.
+- **`kiosk-init.sh`** — writes an XFCE autostart `.desktop` file that launches Firefox with `--kiosk` on container start, hiding the desktop entirely.
+- **`install.sh`** / **`install-mobile.sh`** — full lifecycle scripts: clone the repo fresh, build the image, run the container. Mobile uses `RESOLUTION=390x844` (portrait) and the `agilevm-mobile` image.
 
 ## Key constraints
 
