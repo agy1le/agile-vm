@@ -24,6 +24,7 @@ docker run -d \
     -e TZ=Etc/UTC \
     -e SUBFOLDER=/ \
     -e TITLE=AgileVM \
+    -e PASSWORD=agilevm \
     -p 3000:3000 \
     --shm-size=1gb \
     --restart unless-stopped \
@@ -32,5 +33,5 @@ docker run -d \
 clear
 echo "================================================================"
 echo "  AgileVM installed! Open the Ports tab and click port 3000."
-echo "  Password: abc"
+echo "  Password: agilevm"
 echo "================================================================"
