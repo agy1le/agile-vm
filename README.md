@@ -23,8 +23,8 @@ curl -O https://raw.githubusercontent.com/agy1le/school-vm/main/install.sh && ch
 curl -O https://raw.githubusercontent.com/agy1le/school-vm/main/install-mobile.sh && chmod +x install-mobile.sh && ./install-mobile.sh
 ```
 
-3. Open the **Ports** tab, forward port **8080**, and open that URL on your phone.
-4. Password: `agilevm`
+3. Open the **Ports** tab, forward port **3000**, and open that URL on your phone.
+4. Username: `abc` | Password: `agilevm`
 
 ## Switching Between Desktop and Mobile
 

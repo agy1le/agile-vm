@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-echo "**** Starting AgileVM Mobile (neko) ****"
+echo "**** Building AgileVM Mobile ****"
 
 # Fix docker-proxy missing issue on Codespaces
 sudo mkdir -p /usr/libexec/docker
@@ -9,22 +9,30 @@ sudo ln -sf $(which docker-proxy) /usr/libexec/docker/docker-proxy 2>/dev/null |
 
 docker stop AgileVM 2>/dev/null || true
 docker rm AgileVM 2>/dev/null || true
+rm -rf AgileVM
+
+git clone https://github.com/agy1le/school-vm AgileVM
+cd AgileVM
+
+docker build -t agilevm-mobile -f Dockerfile.mobile . --no-cache
 
 docker run -d \
     --name=AgileVM \
-    -e NEKO_SCREEN=390x844@30 \
-    -e NEKO_PASSWORD=agilevm \
-    -e NEKO_PASSWORD_ADMIN=agilevm \
-    -e NEKO_ICELITE=1 \
-    -e NEKO_TCPMUX=3478 \
-    -p 8080:8080 \
-    -p 3478:3478/tcp \
+    -e PUID=1000 \
+    -e PGID=1000 \
+    --security-opt seccomp=unconfined \
+    -e TZ=Etc/UTC \
+    -e SUBFOLDER=/ \
+    -e TITLE=AgileVM \
+    -e PASSWORD=agilevm \
+    -e RESOLUTION=390x844 \
+    -p 3000:3000 \
     --shm-size=1gb \
     --restart unless-stopped \
-    ghcr.io/m1k1o/neko/firefox:latest
+    agilevm-mobile
 
 clear
 echo "================================================================"
-echo "  AgileVM Mobile installed! Open the Ports tab and forward port 8080."
-echo "  Password: agilevm"
+echo "  AgileVM Mobile installed! Open the Ports tab and click port 3000."
+echo "  Username: abc | Password: agilevm"
 echo "================================================================"
