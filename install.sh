@@ -3,6 +3,10 @@ set -e
 
 echo "**** Building AgileVM ****"
 
+# Fix docker-proxy missing issue on Codespaces
+sudo mkdir -p /usr/libexec/docker
+sudo ln -sf $(which docker-proxy) /usr/libexec/docker/docker-proxy 2>/dev/null || true
+
 docker stop AgileVM 2>/dev/null || true
 docker rm AgileVM 2>/dev/null || true
 rm -rf AgileVM
@@ -14,14 +18,19 @@ docker build -t agilevm . --no-cache
 
 docker run -d \
     --name=AgileVM \
-    --network host \
+    -e PUID=1000 \
+    -e PGID=1000 \
+    --security-opt seccomp=unconfined \
+    -e TZ=Etc/UTC \
+    -e SUBFOLDER=/ \
+    -e TITLE=AgileVM \
+    -p 3000:3000 \
     --shm-size=1gb \
-    -e VNC_PW=agilevm \
     --restart unless-stopped \
     agilevm
 
 clear
 echo "================================================================"
-echo "  AgileVM installed! Open the Ports tab and forward port 6901."
-echo "  Password: agilevm"
+echo "  AgileVM installed! Open the Ports tab and click port 3000."
+echo "  Password: abc"
 echo "================================================================"
