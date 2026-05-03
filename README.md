@@ -8,9 +8,7 @@ A browser VM that runs Firefox entirely in your web browser via GitHub Codespace
 2. In the terminal, run:
 
 ```bash
-curl -O https://raw.githubusercontent.com/YOUR_USERNAME/school-vm/main/install.sh
-chmod +x install.sh
-./install.sh
+curl -O https://raw.githubusercontent.com/agy1le/school-vm/main/install.sh && chmod +x install.sh && ./install.sh
 ```
 
 3. Open the **Ports** tab in Codespaces and click on port **3000**.
