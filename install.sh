@@ -6,6 +6,9 @@ echo "**** Building AgileVM ****"
 sudo apt update -qq
 sudo apt install -y docker.io 2>/dev/null || true
 
+git clone https://github.com/agy1le/school-vm AgileVM
+cd AgileVM
+
 docker build -t agilevm . --no-cache
 
 docker run -d \
