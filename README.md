@@ -1,4 +1,4 @@
-# SchoolVM
+# AgileVM
 
 A browser VM that runs Firefox entirely in your web browser via GitHub Codespaces — no installs, no admin rights needed.
 
@@ -14,7 +14,7 @@ chmod +x install.sh
 ```
 
 3. Open the **Ports** tab in Codespaces and click on port **3000**.
-4. Password: `schoolvm`
+4. Password: `agilevm`
 
 ## Features
 

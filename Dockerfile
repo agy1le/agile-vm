@@ -4,7 +4,7 @@ USER root
 
 # Set the window title
 ENV KASM_VNC_PORT=6901
-ENV TITLE="SchoolVM"
+ENV TITLE="AgileVM"
 
 # Install uBlock Origin and set Firefox as the default start page
 RUN apt-get update && \
