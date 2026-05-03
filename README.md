@@ -11,8 +11,8 @@ A browser VM that runs Firefox entirely in your web browser via GitHub Codespace
 curl -O https://raw.githubusercontent.com/agy1le/school-vm/main/install.sh && chmod +x install.sh && ./install.sh
 ```
 
-3. Open the **Ports** tab in Codespaces and forward port **6901**.
-4. Password: `agilevm`
+3. Open the **Ports** tab in Codespaces and forward port **3000**.
+4. Username: `abc` | Password: `agilevm`
 
 ## Features
 
